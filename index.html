@@ -1,281 +1,378 @@
 <!DOCTYPE html>
-<html lang="nb">
+<html lang="no">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Felix Barbershop Bodø | Klipp og skjeggpleie av erfaren barber</title>
-<meta name="description" content="Ny barbershop i Bodø, drevet av Felix Molinett. Erfaren barber med sans for detaljer. Bestill time for klipp, skjegg og styling." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Felix Barbershop – Herreklipp i Bodø</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            gold: '#C9A84C',
+            'gold-light': '#E8C96A',
+            dark: '#0D0D0D',
+            'dark-2': '#141414',
+            'dark-3': '#1C1C1C',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/motion@11.11.9/dist/motion.js"></script>
+  <link href="https://dmarketing.no/assets/ms-icon-256x256.png" rel="shortcut icon" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; }
+    body { background: #0D0D0D; color: #E8E8E8; font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Manrope', sans-serif; }
+
+    /* Nav */
+    .nav-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 0 6%; height: 64px; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; }
+    .nav-bar.scrolled { background: rgba(13,13,13,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .nav-logo { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: #C9A84C; text-decoration: none; }
+    .nav-cta { background: #C9A84C; color: #0D0D0D; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 22px; text-decoration: none; transition: background 0.2s; }
+    .nav-cta:hover { background: #E8C96A; }
+    .nav-links { display: flex; gap: 36px; }
+    .nav-link { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; font-family: 'Manrope', sans-serif; font-weight: 500; }
+    .nav-link:hover { color: #C9A84C; }
+
+    /* Gold divider */
+    .gold-line { width: 48px; height: 2px; background: #C9A84C; }
+    .label { font-family: 'Manrope', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C; font-weight: 600; }
+
+    /* Hero */
+    .hero { position: relative; height: 100vh; min-height: 700px; overflow: hidden; }
+    .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(13,13,13,0.7) 35%, rgba(13,13,13,0.1) 100%); }
+
+    /* Service cards */
+    .service-card { background: #141414; border: 1px solid rgba(255,255,255,0.06); padding: 32px 28px; transition: border-color 0.2s, transform 0.2s; }
+    .service-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+    .service-icon { width: 44px; height: 44px; border: 1px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+
+    /* Price table */
+    .price-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .price-row:last-child { border-bottom: none; }
+
+    /* Gallery */
+    .gallery-img { overflow: hidden; aspect-ratio: 3/4; }
+    .gallery-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; filter: grayscale(20%); }
+    .gallery-img:hover img { transform: scale(1.05); filter: grayscale(0%); }
+
+    /* Stat */
+    .stat-num { font-family: 'Manrope', sans-serif; font-size: 48px; font-weight: 800; color: #C9A84C; line-height: 1; letter-spacing: -0.03em; }
+  </style>
 </head>
 <body>
 
-<!-- Dekor-former (disiplinert: 2 stk) -->
-<div class="decor decor-ring" aria-hidden="true"></div>
-<div class="decor decor-dot" aria-hidden="true"></div>
-
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a href="#topp" class="brand">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 3v6a6 6 0 0 0 12 0V3"/><path d="M9 20h6"/><path d="M12 15v5"/>
-        </svg>
-      </span>
-      <span class="brand-name">Felix Barbershop</span>
-    </a>
-    <nav class="site-nav" aria-label="Hovedmeny">
-      <a href="#tjenester">Tjenester</a>
-      <a href="#om">Om Felix</a>
-      <a href="#galleri">Galleri</a>
-      <a href="#kontakt">Kontakt</a>
-    </nav>
-    <a href="#kontakt" class="btn btn-solid btn-sm">Bestill time</a>
+<!-- NAV -->
+<nav class="nav-bar" id="navbar">
+  <a href="#" class="nav-logo">Felix Barbershop</a>
+  <div class="nav-links hidden md:flex">
+    <a href="#tjenester" class="nav-link">Tjenester</a>
+    <a href="#priser" class="nav-link">Priser</a>
+    <a href="#galleri" class="nav-link">Galleri</a>
   </div>
-</header>
+  <a href="#bestill" class="nav-cta">Book nå</a>
+</nav>
 
-<main id="topp">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy" data-reveal>
-        <p class="eyebrow">Ny i Bodø · Åpner 2026</p>
-        <h1>Endelig <span class="accent">min egen</span> barberstol.</h1>
-        <p class="lead">
-          Etter mange år bak stolen hos andre åpner Felix Molinett nå sin egen barbershop
-          i Bodø. Samme trygge hender, samme sans for detaljer, men denne gangen på hans
-          egne premisser. Kom innom for et klipp som sitter.
-        </p>
-        <div class="hero-cta">
-          <a href="#kontakt" class="btn btn-solid">Bestill time</a>
-          <a href="#tjenester" class="btn btn-ghost">Se tjenester og priser</a>
-        </div>
-        <p class="hero-note">Håndverk fra en barber med lang fartstid i byen.</p>
-      </div>
-
-      <!-- Hero-visual: stemningsbilde -->
-      <div class="hero-visual" data-reveal>
-        <div class="photo photo-hero" role="img" aria-label="Stemningsbilde fra barbershop">
-          <span class="photo-tag">Bilde: interiør / Felix i arbeid</span>
-        </div>
-        <div class="hero-badge">
-          <span class="hero-badge-k">20+ år</span>
-          <span class="hero-badge-l">med saks og maskin</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TRYGGHETSPUNKTER (ingen falske tall) -->
-  <section class="strip">
-    <div class="wrap strip-grid">
-      <div class="strip-item" data-reveal>
-        <h3>Erfaren barber</h3>
-        <p>Lang fartstid fra barberstolen i Bodø, blant annet hos The London Barber.</p>
-      </div>
-      <div class="strip-item" data-reveal>
-        <h3>Tid til hver kunde</h3>
-        <p>Ingen samlebånd. Du får en klipp som er tilpasset deg og hodeformen din.</p>
-      </div>
-      <div class="strip-item" data-reveal>
-        <h3>Enkel booking</h3>
-        <p>Send en melding eller ring, så finner vi en tid som passer.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- TJENESTER / PRISER -->
-  <section id="tjenester" class="services">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">Tjenester og priser</p>
-        <h2>Klipp, skjegg og litt <span class="accent">skikkelig stell</span>.</h2>
-        <p class="section-lead">
-          Enten du vil ha en ren fade, en klassisk saksklipp eller skjegget formet skikkelig,
-          får du full oppmerksomhet i stolen. Prisene under er eksempler og justeres før åpning.
-        </p>
-      </div>
-
-      <div class="price-grid">
-        <article class="price-card" data-reveal>
-          <div class="price-top">
-            <h3>Herreklipp</h3>
-            <span class="price">449&nbsp;kr</span>
-          </div>
-          <p>Klassisk eller moderne klipp, vask og styling. Tilpasset hodeform og ønske.</p>
-        </article>
-
-        <article class="price-card" data-reveal>
-          <div class="price-top">
-            <h3>Klipp og skjegg</h3>
-            <span class="price">599&nbsp;kr</span>
-          </div>
-          <p>Full pakke: klipp, trimming og forming av skjegg med varmt håndkle til slutt.</p>
-        </article>
-
-        <article class="price-card" data-reveal>
-          <div class="price-top">
-            <h3>Skjeggtrim</h3>
-            <span class="price">299&nbsp;kr</span>
-          </div>
-          <p>Forming og rensk av kantene, så skjegget ser tilsiktet ut, ikke tilfeldig.</p>
-        </article>
-
-        <article class="price-card" data-reveal>
-          <div class="price-top">
-            <h3>Snauklipp / maskin</h3>
-            <span class="price">299&nbsp;kr</span>
-          </div>
-          <p>Rask og ren maskinklipp med jevn overgang. Inn og ut med friskt hode.</p>
-        </article>
-
-        <article class="price-card" data-reveal>
-          <div class="price-top">
-            <h3>Barneklipp</h3>
-            <span class="price">349&nbsp;kr</span>
-          </div>
-          <p>Rolig og tålmodig klipp for de yngste. Til og med tolv år.</p>
-        </article>
-
-        <article class="price-card" data-reveal>
-          <div class="price-top">
-            <h3>Pensjonist</h3>
-            <span class="price">379&nbsp;kr</span>
-          </div>
-          <p>Klipp til hyggelig pris på dagtid. Ta med deg praten, vi har god tid.</p>
-        </article>
-      </div>
-
-      <p class="price-foot" data-reveal>
-        Eksempelpriser. Endelige priser bekreftes ved åpning. Betaling med kort og Vipps.
+<!-- HERO -->
+<section class="hero">
+  <img
+    src="https://dmarketing.no/maler/bilder/frisor/allef-vinicius-IvQeAVeJULw-unsplash.jpg"
+    onerror="this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=85'"
+    alt="Felix Barbershop"
+    class="hero-img"
+  />
+  <div class="hero-overlay"></div>
+  <div class="absolute inset-0 flex items-center" style="padding: 0 6%; padding-top: 64px;">
+    <div data-animate style="max-width: 620px;">
+      <p class="label mb-6">Herreklipp &amp; Barbering · Bodø</p>
+      <h1 class="font-display font-extrabold text-white mb-6" style="font-size: clamp(48px, 7vw, 88px); line-height: 1.0; letter-spacing: -0.03em;">
+        Stil du kan<br/><span style="color: #C9A84C;">stole på.</span>
+      </h1>
+      <p class="mb-10" style="font-size: 17px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 420px;">
+        Premium klipp, klassisk barbering og moderne stiler. Vi tar oss tid til deg.
       </p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#bestill" class="nav-cta" style="font-size: 13px; padding: 14px 32px;">Book time</a>
+        <a href="#tjenester" style="border: 1px solid rgba(201,168,76,0.4); color: #C9A84C; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 28px; text-decoration: none; transition: border-color 0.2s;">Se tjenester</a>
+      </div>
     </div>
-  </section>
+  </div>
+  <!-- Stats strip -->
+  <div class="absolute bottom-0 left-0 right-0" style="background: rgba(13,13,13,0.8); backdrop-filter: blur(10px); border-top: 1px solid rgba(201,168,76,0.15);">
+    <div class="max-w-5xl mx-auto px-6 py-6 grid grid-cols-3 gap-6 text-center">
+      <div>
+        <div class="stat-num">2026</div>
+        <div style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px;">Etablert</div>
+      </div>
+      <div>
+        <div class="stat-num" style="font-size:34px;">Drop-in</div>
+        <div style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px;">Velkommen</div>
+      </div>
+      <div>
+        <div class="stat-num" style="font-size:34px;">Bodø</div>
+        <div style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px;">Sentrum</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- OM FELIX -->
-  <section id="om" class="about">
-    <div class="wrap about-grid">
-      <div class="about-photo" data-reveal>
-        <div class="photo photo-portrait" role="img" aria-label="Portrett av Felix Molinett">
-          <span class="photo-tag">Bilde: portrett av Felix</span>
+<!-- TJENESTER -->
+<section id="tjenester" class="py-28 px-6" style="background: #0D0D0D;">
+  <div class="max-w-5xl mx-auto">
+    <div data-animate class="mb-16">
+      <p class="label mb-4">Hva vi tilbyr</p>
+      <div class="gold-line mb-6"></div>
+      <h2 class="font-display font-extrabold text-white" style="font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.03em;">Våre tjenester</h2>
+    </div>
+    <div data-stagger class="grid md:grid-cols-3 gap-px" style="background: rgba(255,255,255,0.05);">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#C9A84C" stroke-width="1.5"><path d="M6 3v18M6 12h12M18 3v18"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-white mb-2" style="font-size: 18px;">Herreklipp</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7;">Klassisk og moderne klipp tilpasset din hodestil. Inkluderer vask og styling.</p>
+        <p class="mt-4" style="font-size: 13px; color: #C9A84C; font-family: 'Manrope', sans-serif; font-weight: 600;">fra 350 kr</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#C9A84C" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-white mb-2" style="font-size: 18px;">Skjeggstell</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7;">Trimming, forming og varm barbering med hot towel og aftershave.</p>
+        <p class="mt-4" style="font-size: 13px; color: #C9A84C; font-family: 'Manrope', sans-serif; font-weight: 600;">fra 250 kr</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#C9A84C" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-white mb-2" style="font-size: 18px;">Pakketilbud</h3>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7;">Klipp + skjegg + hot towel shave. Den komplette gentlemanopplevelsen.</p>
+        <p class="mt-4" style="font-size: 13px; color: #C9A84C; font-family: 'Manrope', sans-serif; font-weight: 600;">fra 550 kr</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / PHOTO SPLIT -->
+<section class="py-0" style="background: #141414;">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 items-stretch">
+    <div class="aspect-video md:aspect-auto overflow-hidden" style="min-height: 500px;">
+      <img
+        src="https://dmarketing.no/maler/bilder/frisor/agustin-fernandez-1Pmp9uxK8X8-unsplash.jpg"
+        onerror="this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80'"
+        alt="Barber på jobb"
+        class="w-full h-full object-cover"
+        style="filter: grayscale(15%);"
+      />
+    </div>
+    <div data-animate class="flex flex-col justify-center px-12 py-20">
+      <p class="label mb-4">Om oss</p>
+      <div class="gold-line mb-6"></div>
+      <h2 class="font-display font-extrabold text-white mb-6" style="font-size: clamp(28px, 3.5vw, 42px); letter-spacing: -0.03em; line-height: 1.15;">Håndverk vi er<br/>stolte av.</h2>
+      <p style="font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 24px;">Etter mange år bak stolen i Bodø starter Felix nå for seg selv. Hos oss handler det ikke bare om et klipp, men om håndverk og tid til deg.</p>
+      <p style="font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-bottom: 32px;">Felix er en erfaren barber med lang fartstid, nå endelig i egen shop. Presise klipp, klassisk barbering og god stemning.</p>
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <div class="stat-num" style="font-size: 36px;">2026</div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 4px;">Etablert</div>
+        </div>
+        <div>
+          <div class="stat-num" style="font-size: 36px;">20+</div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 4px;">År erfaring</div>
         </div>
       </div>
-      <div class="about-copy" data-reveal>
-        <p class="eyebrow">Om Felix</p>
-        <h2>Fra Venezuela til barberstolen i Bodø.</h2>
-        <p>
-          Felix Molinett er 44 år og har brukt store deler av livet på et yrke han er glad i.
-          Opprinnelig fra Venezuela, i dag godt etablert i Bodø, med tid bak stolen hos
-          The London Barber før han nå tar steget og starter for seg selv.
-        </p>
-        <p>
-          For Felix handler et godt klipp om mer enn saks og maskin. Det handler om å ta seg tid,
-          se hvem som sitter i stolen og sende deg ut med noe du er fornøyd med. Nå får han endelig
-          gjøre det på sin egen måte, i sin egen shop.
-        </p>
-        <ul class="about-list">
-          <li>Erfaren barber med lang fartstid i Bodø</li>
-          <li>Trygg på både klassiske klipp og moderne fades</li>
-          <li>Skjeggforming og stell som en del av håndverket</li>
-        </ul>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- GALLERI -->
-  <section id="galleri" class="gallery">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">Galleri</p>
-        <h2>Litt av <span class="accent">stemningen</span>.</h2>
-        <p class="section-lead">
-          Bildene kommer på plass når shopen er klar. Her viser vi frem klipp, interiør og
-          detaljene som gjør et besøk til noe mer enn bare en tur til frisøren.
-        </p>
-      </div>
-      <div class="gallery-grid" data-reveal>
-        <div class="photo photo-gallery"><span class="photo-tag">Bilde: klipp</span></div>
-        <div class="photo photo-gallery"><span class="photo-tag">Bilde: skjegg</span></div>
-        <div class="photo photo-gallery"><span class="photo-tag">Bilde: interiør</span></div>
-        <div class="photo photo-gallery"><span class="photo-tag">Bilde: detalj</span></div>
-      </div>
+<!-- PRISER -->
+<section id="priser" class="py-28 px-6" style="background: #141414;">
+  <div class="max-w-4xl mx-auto">
+    <div data-animate class="text-center mb-16">
+      <p class="label mb-4">Transparente priser</p>
+      <div class="gold-line mx-auto mb-6"></div>
+      <h2 class="font-display font-extrabold text-white" style="font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.03em;">Prisliste</h2>
     </div>
-  </section>
-
-  <!-- KONTAKT / ÅPNINGSTIDER -->
-  <section id="kontakt" class="contact">
-    <div class="wrap contact-grid">
-      <div class="contact-copy" data-reveal>
-        <p class="eyebrow">Kontakt og booking</p>
-        <h2>Stikk innom, eller bestill time.</h2>
-        <p class="section-lead">
-          Barbershopen åpner i Bodø i 2026. Vil du sikre deg en av de første timene?
-          Ta kontakt, så gir vi beskjed så snart vi setter opp bookingen.
-        </p>
-
-        <div class="contact-rows">
-          <div class="contact-row">
-            <span class="contact-label">Adresse</span>
-            <span class="contact-value">[adresse i Bodø]</span>
+    <div class="grid md:grid-cols-2 gap-16">
+      <div>
+        <p class="label mb-6">Klipp</p>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Herreklipp</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Klipp + styling</p>
           </div>
-          <div class="contact-row">
-            <span class="contact-label">Telefon</span>
-            <span class="contact-value">[telefonnummer]</span>
-          </div>
-          <div class="contact-row">
-            <span class="contact-label">E-post</span>
-            <span class="contact-value">[e-postadresse]</span>
-          </div>
-          <div class="contact-row">
-            <span class="contact-label">Instagram</span>
-            <span class="contact-value">[@brukernavn]</span>
-          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">350 kr</p>
         </div>
-
-        <div class="hero-cta">
-          <a href="tel:" class="btn btn-solid">Ring for time</a>
-          <a href="#topp" class="btn btn-ghost">Til toppen</a>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Studentklipp</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Gyldig studentbevis</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">280 kr</p>
+        </div>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Barn (under 12)</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Enkelt klipp</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">220 kr</p>
+        </div>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Fade / Skin Fade</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Inkludert styling</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">420 kr</p>
         </div>
       </div>
-
-      <div class="contact-hours" data-reveal>
-        <h3>Åpningstider</h3>
-        <p class="hours-note">Foreløpige tider, bekreftes ved åpning.</p>
-        <ul class="hours-list">
-          <li><span>Mandag</span><span>10 – 18</span></li>
-          <li><span>Tirsdag</span><span>10 – 18</span></li>
-          <li><span>Onsdag</span><span>10 – 18</span></li>
-          <li><span>Torsdag</span><span>10 – 19</span></li>
-          <li><span>Fredag</span><span>10 – 18</span></li>
-          <li><span>Lørdag</span><span>10 – 15</span></li>
-          <li><span>Søndag</span><span class="closed">Stengt</span></li>
-        </ul>
+      <div>
+        <p class="label mb-6">Skjegg & pakker</p>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Skjeggstell</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Trim + forming</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">250 kr</p>
+        </div>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Hot towel barbering</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Klassisk barbering</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">380 kr</p>
+        </div>
+        <div class="price-row" style="border-color: rgba(201,168,76,0.2); background: rgba(201,168,76,0.04); margin: 0 -16px; padding: 16px;">
+          <div>
+            <p class="font-display font-bold text-white" style="font-size:15px;">The Full Package ⭐</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">Klipp + skjegg + hot towel</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:18px;">550 kr</p>
+        </div>
+        <div class="price-row">
+          <div>
+            <p class="font-display font-semibold text-white" style="font-size:15px;">Månedlig abonnement</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.35);">2 klipp per måned</p>
+          </div>
+          <p class="font-display font-bold" style="color:#C9A84C;font-size:16px;">599 kr</p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <div class="footer-brand">
-      <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 3v6a6 6 0 0 0 12 0V3"/><path d="M9 20h6"/><path d="M12 15v5"/>
-        </svg>
-      </span>
-      <span>Felix Barbershop, Bodø</span>
+<!-- GALLERI -->
+<section id="galleri" class="py-28 px-6" style="background: #0D0D0D;">
+  <div class="max-w-6xl mx-auto">
+    <div data-animate class="text-center mb-16">
+      <p class="label mb-4">Vårt arbeid</p>
+      <div class="gold-line mx-auto mb-6"></div>
+      <h2 class="font-display font-extrabold text-white" style="font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.03em;">Galleri</h2>
     </div>
-    <p class="footer-note">Barber og eier: Felix Molinett. Åpner 2026.</p>
-    <p class="footer-credit">Nettside av Dietrichs Marketing</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+      <div class="gallery-img">
+        <img src="https://dmarketing.no/maler/bilder/frisor/nate-johnston-tgPrIYnW3g4-unsplash.jpg" onerror="this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=500&q=80'" alt="Klipp 1" />
+      </div>
+      <div class="gallery-img" style="aspect-ratio:3/4; margin-top:48px;">
+        <img src="https://dmarketing.no/maler/bilder/frisor/agustin-fernandez-1Pmp9uxK8X8-unsplash.jpg" onerror="this.src='https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=500&q=80'" alt="Klipp 2" />
+      </div>
+      <div class="gallery-img">
+        <img src="https://dmarketing.no/maler/bilder/frisor/andrea-donato-MNu0n-3BIKs-unsplash.jpg" onerror="this.src='https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=500&q=80'" alt="Verktøy" />
+      </div>
+      <div class="gallery-img" style="aspect-ratio:3/4; margin-top:48px;">
+        <img src="https://dmarketing.no/maler/bilder/frisor/delfina-pan-wJoB8D3hnzc-unsplash.jpg" onerror="this.src='https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=500&q=80'" alt="Klipp 4" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANMELDELSER -->
+<section class="py-24 px-6" style="background: #141414;">
+  <div class="max-w-5xl mx-auto">
+    <div data-animate class="text-center mb-14">
+      <p class="label mb-4">Hva kundene sier · eksempel</p>
+      <div class="gold-line mx-auto mb-6"></div>
+    </div>
+    <div data-stagger class="grid md:grid-cols-3 gap-6">
+      <div style="border:1px solid rgba(255,255,255,0.07);padding:28px;background:#1C1C1C;">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <span style="color:#C9A84C;font-size:14px;">★★★★★</span>
+        </div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:20px;">"Beste barber i hele Bodø. Barberen vet akkurat hva han gjør, og resultatet er alltid perfekt."</p>
+        <p class="font-display font-semibold text-white" style="font-size:13px;">Henrik L.</p>
+      </div>
+      <div style="border:1px solid rgba(201,168,76,0.25);padding:28px;background:#1C1C1C;">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <span style="color:#C9A84C;font-size:14px;">★★★★★</span>
+        </div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:20px;">"Har gått her fast i 3 år. De husker alltid hva jeg vil ha og holder et superprofesjonelt nivå."</p>
+        <p class="font-display font-semibold text-white" style="font-size:13px;">Mikael S.</p>
+      </div>
+      <div style="border:1px solid rgba(255,255,255,0.07);padding:28px;background:#1C1C1C;">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <span style="color:#C9A84C;font-size:14px;">★★★★★</span>
+        </div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:20px;">"Hot towel pakken er bare noe annet. Føler meg som en ny person etterpå. Anbefales sterkt!"</p>
+        <p class="font-display font-semibold text-white" style="font-size:13px;">Thomas B.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK / CTA -->
+<section id="bestill" class="py-28 px-6" style="background: #0D0D0D; border-top: 1px solid rgba(201,168,76,0.1);">
+  <div class="max-w-2xl mx-auto text-center" data-animate>
+    <p class="label mb-4">Ta kontakt</p>
+    <div class="gold-line mx-auto mb-8"></div>
+    <h2 class="font-display font-extrabold text-white mb-4" style="font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.03em;">Klar for en ny klipp?</h2>
+    <p style="font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:40px;">Ring oss eller send en melding for å booke time. Walk-in alltid velkommen.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="tel:" class="nav-cta" style="font-size:13px;padding:16px 36px;">Ring [telefon]</a>
+      <a href="mailto:" style="border:1px solid rgba(201,168,76,0.35);color:#C9A84C;font-family:'Manrope',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:16px 32px;text-decoration:none;">Send e-post</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.05);padding:40px 6%;">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <a href="#" class="nav-logo">Felix Barbershop</a>
+    <p style="font-size:12px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 Felix Barbershop Bodø. Alle rettigheter reservert.</p>
+    <div style="display:flex;gap:24px;">
+      <a href="#tjenester" class="nav-link">Tjenester</a>
+      <a href="#priser" class="nav-link">Priser</a>
+      <a href="#bestill" class="nav-link">Book</a>
+    </div>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="app.js"></script>
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Animations
+  window.addEventListener('load', () => {
+    if (typeof Motion === 'undefined') return;
+    const { inView, animate } = Motion;
+    inView('[data-animate]', ({ target }) => {
+      animate(target, { opacity: [0,1], y: [28,0] }, { duration: 0.55, easing: [0.25,0.46,0.45,0.94] });
+    });
+    inView('[data-stagger]', ({ target }) => {
+      animate(target.querySelectorAll(':scope > *'), { opacity: [0,1], y: [20,0] }, { duration: 0.4, delay: animate.stagger(0.1) });
+    });
+  });
+</script>
 </body>
 </html>
